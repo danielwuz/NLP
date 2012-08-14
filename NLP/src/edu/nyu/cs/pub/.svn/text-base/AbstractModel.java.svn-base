@@ -1,0 +1,75 @@
+package edu.nyu.cs.pub;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.nyu.cs.pos.EmissionMatrix;
+import edu.nyu.cs.pos.TransitionMatrix;
+
+public abstract class AbstractModel {
+
+	protected Corpus corpus = null;
+
+	protected Matrix priorMatrix = null;
+
+	protected Matrix likelihoodMatrix = null;
+
+	private boolean debug = true;
+
+	public void loadCorpus(String filePath) throws Exception {
+		corpus = new Corpus(filePath, FileManager.instance);
+	}
+
+	protected abstract Decoder getDecoder();
+
+	/**
+	 * Part-of-Speech tagging, based on training corpus
+	 * 
+	 * @param test
+	 *            words of sentence
+	 * @return corresponding tags
+	 * @throws Exception
+	 *             throws exception when file IO exception occurs
+	 */
+	public List<Sentence> tag(String filePath) throws Exception {
+		Decoder decoder = getDecoder();
+		// viterbi algorithm decoding
+		Corpus testCorpus = new Corpus(filePath, FileManager.instance);
+		List<Sentence> sentences = testCorpus.getSentences();
+		List<Sentence> res = new ArrayList<Sentence>();
+		for (Sentence sentence : sentences) {
+			if (!sentence.isEmpty()) {
+				sentence = decoder.decode(sentence);
+			}
+			res.add(sentence);
+		}
+		if (debug) {
+			output(filePath, res);
+		}
+		return res;
+	}
+
+	private void output(String outputPath, List<Sentence> res) {
+		for (Sentence sentence : res) {
+			sentence.sort();
+		}
+		File output = new File(outputPath + ".out");
+		try {
+			FileManager.writeFile(output, res);
+			FileManager.writeFileForTest(new File(outputPath + ".test"), res);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out
+					.println("Exception occurs when writing output into file ");
+			System.out.println(output.getPath());
+		}
+	}
+
+	public void train(String filePath) throws Exception {
+		// debug Load corpus into memory
+		loadCorpus(filePath);
+		priorMatrix = new TransitionMatrix(corpus);
+		likelihoodMatrix = new EmissionMatrix(corpus);
+	}
+}

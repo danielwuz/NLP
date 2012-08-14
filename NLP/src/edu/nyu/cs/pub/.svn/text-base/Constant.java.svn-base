@@ -1,0 +1,12 @@
+package edu.nyu.cs.pub;
+
+public interface Constant {
+	static final String START_SYMBOL = "<S>";
+	static final String END_SYMBOL = "</S>";
+
+	static final double MIN_VALUE = 1.0e-200;
+
+	interface TAG {
+		static final String COMMA = "COMMA";
+	}
+}

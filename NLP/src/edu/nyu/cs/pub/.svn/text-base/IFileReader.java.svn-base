@@ -1,0 +1,10 @@
+package edu.nyu.cs.pub;
+
+import java.io.File;
+import java.util.List;
+
+public interface IFileReader {
+
+	public List<Sentence> read(File file) throws Exception;
+
+}
