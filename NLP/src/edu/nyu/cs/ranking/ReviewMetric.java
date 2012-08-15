@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * Movie review model
+ * 
+ * @author Daniel Wu
+ * 
+ */
 public class ReviewMetric {
 
 	public static String negPrefix = "NOT_";
@@ -64,7 +70,7 @@ public class ReviewMetric {
 	public void setMatrix(Map<String, Integer> matrix) {
 		this.matrix = matrix;
 	}
-	
+
 	public double getLabel3() {
 		return label3;
 	}
@@ -105,11 +111,11 @@ public class ReviewMetric {
 			String word = entry.getKey();
 			// if current word indicates a negative meaning
 			boolean neg = false;
-//			if (word.startsWith(ReviewMetric.negPrefix)) {
-//				neg = true;
-//				// retrieve its original meaning
-//				word = word.substring(4);
-//			}
+			// if (word.startsWith(ReviewMetric.negPrefix)) {
+			// neg = true;
+			// // retrieve its original meaning
+			// word = word.substring(4);
+			// }
 			Integer count = tmp.get(word);
 			count = (count == null) ? 0 : count;
 			if (neg) {
@@ -127,5 +133,5 @@ public class ReviewMetric {
 	public List<Integer[]> getIndexAndValue() {
 		return indexAndValue;
 	}
-	
+
 }

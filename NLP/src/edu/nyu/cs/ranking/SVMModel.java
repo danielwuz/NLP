@@ -15,7 +15,12 @@ import libsvm.svm_parameter;
 import libsvm.svm_problem;
 
 /**
- * @author Zhe Wu N16445442 zw339@nyu.edu
+ * SVM Model for star rating based on movie comments.
+ * <p>
+ * see {@link http://www.cs.cornell.edu/home/llee/papers/pang-lee-stars.pdf} for
+ * more detail.
+ * 
+ * @author Daniel Wu
  * 
  */
 public class SVMModel {
@@ -281,8 +286,8 @@ public class SVMModel {
 		for (ReviewMetric metric : rmList) {
 			metric.buildIndexAndValuePair(vocabulary);
 		}
-		// fileManager.writeMatrix3(modelPath3, rmList);
-		// fileManager.writeMatrix4(modelPath4, rmList);
+		fileManager.writeMatrix3(modelPath3, rmList);
+		fileManager.writeMatrix4(modelPath4, rmList);
 		return rmList;
 	}
 
