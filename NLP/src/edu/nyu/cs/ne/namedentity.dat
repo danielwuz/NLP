@@ -1,0 +1,112 @@
+tag=PRP$ B-NP
+tag=PRP B-NP
+tag=PRP pretag=CC pretype=I-NP I-NP
+tag=DT B-NP
+tag=POS B-NP
+tag=PDT B-NP
+tag=WDT B-NP
+tag=WP B-NP
+tag=EX B-NP
+tag=WP$ B-NP
+tag=NNS-4 B-NP
+
+tag=NOUN pretype=O B-NP
+tag=NOUN pretype=NULL B-NP
+tag=NOUN I-NP
+
+tag=NNP pretag=NNP I-NP
+tag=NNP pretag=NNPS I-NP
+tag=NNP pretag=DT I-NP
+tag=NNP pretag=POS I-NP
+tag=NNP pretag=JJ I-NP
+tag=NNP pretag=JJR I-NP
+tag=NNP B-NP
+
+tag=. O
+tag=VB O
+tag=VBZ O
+tag=VBD O
+tag=VBP O
+tag=MD O
+tag=) O
+tag=( O
+tag=: O
+tag='' O
+tag=UH O
+tag=SYM I-NP
+tag=$ O
+tag=-LSB- O
+tag=-RSB- O
+tag=LS O
+tag=AFX O
+tag=ADVP-MNR O
+tag=HV O
+tag=PRT O
+
+tag=TO O
+tag=WRB O
+
+tag=`` pretype=B-NP I-NP
+tag=`` O
+
+tag=JJ pretype=NULL B-NP
+tag=JJ pretype=B-NP I-NP
+tag=JJ pretype=I-NP I-NP
+tag=JJ O
+
+tag=JJR pretype=NULL B-NP
+tag=JJR pretype=B-NP I-NP
+tag=JJR pretype=I-NP I-NP
+tag=JJR O
+
+tag=JJS pretype=NULL B-NP
+tag=JJS pretype=B-NP I-NP
+tag=JJS pretype=I-NP I-NP
+tag=JJS O
+
+tag=VBG pretag=PRP$ I-NP
+tag=VBG pretag=PRP I-NP
+tag=VBG pretag=DT I-NP
+tag=VBG pretag=POS I-NP
+tag=VBG O
+
+tag=VBN pretag=PRP$ I-NP
+tag=VBN pretag=PRP I-NP
+tag=VBN pretag=DT I-NP
+tag=VBN pretag=POS I-NP
+tag=VBN pretag=VBP O
+tag=VBN O
+
+
+tag=CC O
+tag=CC pretag=NNP nexttag=NNP I-NP
+tag=CC pretag=NNS nexttag=NNS I-NP
+tag=CC pretag=PRP nexttag=PRP I-NP
+tag=CC pretag=JJ nexttag=JJ I-NP
+tag=CC pretag=NN nexttag=NN I-NP
+
+tag=RB nexttag=CD B-NP
+tag=RB pretag=VBZ O
+tag=RB pretag=VBP O
+tag=RB pretag=MD O
+tag=RB O
+
+tag=RBR O
+
+tag=RP O
+
+tag=RBS pretag=DT nexttag=JJ I-NP
+tag=RBS pretag=PRP$ nexttag=JJ I-NP
+tag=RBS O
+
+tag=IN O
+
+tag=HYPH pretype=O O
+tag=HYPH I-NP
+
+tag=COMMA pretag=NNP nexttag=NNP I-NP
+tag=COMMA pretag=NNS nexttag=NNS I-NP
+tag=COMMA pretag=PRP nexttag=PRP I-NP
+tag=COMMA pretag=JJ nexttag=JJ I-NP
+tag=COMMA pretag=NN nexttag=NN I-NP
+tag=COMMA O

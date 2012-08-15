@@ -1,6 +1,0 @@
-package edu.nyu.cs.pub;
-
-
-public interface Decoder {
-	public Sentence decode(Sentence sentence);
-}
