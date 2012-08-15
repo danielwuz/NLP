@@ -8,9 +8,9 @@ Including below tasks:
 1. Task 1. Dollar Amounts Recognizing Using Regular Expressions
  * Find out money expression in an article
 2. Task 2. POS tagger
- * Mark up a word in a corpus as corresponding to a particular part of speech, based on its context, using Hidden markov model
+ * Mark up a word's Part-of-Speech, based on its context, using Hidden Markov Model
 3. Task 3. Named Entity Tagger
- * Identify noun groups using maximum entropy markov model
+ * Identify noun groups using Maximum Entropy Markov Model
 4. Task 4. Relation tagger
  * Find out ARG1 for % mark
 5. Task 5. Sentimental Analysis and Rating Star
