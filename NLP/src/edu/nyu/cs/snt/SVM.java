@@ -1,5 +1,6 @@
 package edu.nyu.cs.snt;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,6 +20,15 @@ import edu.nyu.cs.pub.Corpus;
 import edu.nyu.cs.pub.Sentence;
 import edu.nyu.cs.pub.TextTool;
 
+/**
+ * SVM classifier.
+ * <p>
+ * This classifier uses open source svm library which can be found by
+ * {@link http://www.csie.ntu.edu.tw/~cjlin/libsvm/}
+ * 
+ * @author Daniel Wu
+ * 
+ */
 public class SVM {
 
 	private static final Double POSITIVE = 1.0;
@@ -31,6 +41,14 @@ public class SVM {
 
 	private svm_model model = null;
 
+	/**
+	 * Trains SVM model on training corpus
+	 * 
+	 * @param trainingData
+	 *            training corpus
+	 * @throws Exception
+	 *             if error occurs when writing features into model file
+	 */
 	public void train(Corpus[] trainingData) throws Exception {
 		// vocabulary, being used to find word index
 		this.vocabulary = buildVocabulary(trainingData);
@@ -199,6 +217,15 @@ public class SVM {
 		return false;
 	}
 
+	/**
+	 * Predicts polarity of movie comments using svm classifier
+	 * 
+	 * @param testData
+	 *            testing corpus
+	 * @return predicting stats. Result is an integer array with length of 2.<br/>
+	 *         First element is the number of correct predict. Second element is
+	 *         the number of incorrect predict.
+	 */
 	public int[] test(Corpus[] trainingData) {
 		// classes: 1 positive -1 negative
 		double[] clazz = buildClassesList(trainingData);

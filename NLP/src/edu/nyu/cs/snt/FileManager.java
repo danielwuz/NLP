@@ -18,31 +18,41 @@ import java.util.List;
 import edu.nyu.cs.pub.IFileReader;
 import edu.nyu.cs.pub.Sentence;
 import edu.nyu.cs.pub.TextTool;
-import edu.nyu.cs.pub.Token;
 import edu.nyu.cs.pub.Token.TokenBuilder;
-import edu.nyu.cs.pub.Token.TokenDecor;
 
 /**
  * Manage file resources, including input and output
  * 
- * @author Zhe Wu N16445442 zw339@nyu.edu
+ * @author Daniel Wu
+ * 
+ */
+/**
+ * @author Daniel Wu
  * 
  */
 public class FileManager implements IFileReader {
 
+	// negative prefix
 	private String negPrefix = "NOT_";
 
+	// set of negative words. Each word after negative word is prefixed with a
+	// 'NOT_'
 	private List<String> negwords = Arrays.asList(new String[] { "don't",
 			"doesn't", "didn't", "not", "hasn't", "haven't", "hadn't", "won't",
 			"wouldn't", "can't", "cannot", "couldn't", "shalln't", "shouldn't",
 			"isn't", "wasn't", "aren't", "weren't", "never", "no" });
 
+	// set of punctuations
 	private List<String> punctuations = Arrays.asList(new String[] { ".", ",",
 			"!", "?", ";", ":", "(", ")", "\"", "\'" });
 
+	// stopping words
 	private static List<String> stopList = FileManager
 			.readStopList("resources/english.stop");
 
+	/**
+	 * Class constructor
+	 */
 	public FileManager() {
 	}
 
@@ -112,7 +122,10 @@ public class FileManager implements IFileReader {
 	 * Add negative prefix between words in negative word and next punctuation
 	 * 
 	 * @param strLine
-	 * @return
+	 *            words between negative word and end of sentence
+	 * @return words with a 'NOT_' prefix
+	 * @see #negPrefix
+	 * @see #negwords
 	 */
 	private String[] negativeWords(String strLine) {
 		String[] strs = strLine.split("\\s");
@@ -131,42 +144,19 @@ public class FileManager implements IFileReader {
 		return strs;
 	}
 
-	public static void writeFileForTest(File file, List<Sentence> sentences)
-			throws Exception {
-		FileOutputStream fstream = new FileOutputStream(file);
-		// Get the object of DataInputStream
-		DataOutputStream in = new DataOutputStream(fstream);
-		BufferedWriter br = new BufferedWriter(new OutputStreamWriter(in));
-		for (Sentence sentence : sentences) {
-			List<Token> tokens = sentence.getTokens();
-			for (Token token : tokens) {
-				br.append(new TokenDecor(token, TokenDecor.TAB).toString());
-				br.append("\n");
-			}
-			br.append("\n");
-		}
-		br.flush();
-	}
-
-	public static void writeFile(File file, List<Sentence> sentences)
-			throws Exception {
-		FileOutputStream fstream = new FileOutputStream(file);
-		// Get the object of DataInputStream
-		DataOutputStream in = new DataOutputStream(fstream);
-		BufferedWriter br = new BufferedWriter(new OutputStreamWriter(in));
-		for (Sentence sentence : sentences) {
-			List<Token> tokens = sentence.getTokens();
-			for (Token token : tokens) {
-				br.append(new TokenDecor(token, TokenDecor.BLANK).toString());
-				br.append("\n");
-			}
-			br.append("\n");
-		}
-		br.flush();
-	}
-
+	/**
+	 * Writes features into file. This file will be used as input to MaxEnt
+	 * Model.
+	 * 
+	 * @param modelFile
+	 *            file into which the features are written
+	 * @param features
+	 *            features to be used in MaxEnt Model
+	 * @throws IOException
+	 *             if file writing error occurs
+	 */
 	public static void writeFeatures(String modelFile, List<String[]> features)
-			throws Exception {
+			throws IOException {
 		FileOutputStream fstream = new FileOutputStream(modelFile);
 		// Get the object of DataInputStream
 		DataOutputStream in = new DataOutputStream(fstream);
@@ -177,6 +167,13 @@ public class FileManager implements IFileReader {
 		br.flush();
 	}
 
+	/**
+	 * Reads in stopping word from file
+	 * 
+	 * @param path
+	 *            stopping words file path
+	 * @return list of stopping words
+	 */
 	public static List<String> readStopList(String path) {
 		try {
 			StringBuilder contents = new StringBuilder();

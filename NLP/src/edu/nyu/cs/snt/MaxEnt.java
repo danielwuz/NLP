@@ -2,6 +2,7 @@ package edu.nyu.cs.snt;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -24,10 +25,24 @@ import edu.nyu.cs.pub.Corpus;
 import edu.nyu.cs.pub.Sentence;
 import edu.nyu.cs.pub.TextTool;
 
+/**
+ * Classifier using Maximum Entropy Model for sentimental analysis
+ * 
+ * @author Daniel Wu
+ * 
+ */
 public class MaxEnt extends AbstractClassifier {
 
+	// feature model file path
 	private String modelFile = "unigramFeatures.dat";
 
+	/**
+	 * Class constructor with list of folders
+	 * 
+	 * @param folders
+	 *            folders that contains corpuses
+	 * @see Folder
+	 */
 	public MaxEnt(List<Folder> folders) {
 		super(folders);
 		filter();
@@ -77,7 +92,15 @@ public class MaxEnt extends AbstractClassifier {
 		this.folders = tmp;
 	}
 
-	public void train(Corpus[] trainingData) throws Exception {
+	/**
+	 * Trains maximum entropy model on training corpus
+	 * 
+	 * @param trainingData
+	 *            training corpus
+	 * @throws IOException
+	 *             if error occurs when writing features into model file
+	 */
+	public void train(Corpus[] trainingData) throws IOException {
 		List<String[]> features = new ArrayList<String[]>();
 		features.addAll(extractFeature(trainingData[0], "positive"));
 		features.addAll(extractFeature(trainingData[1], "negative"));
@@ -92,7 +115,7 @@ public class MaxEnt extends AbstractClassifier {
 			String[] perm = sentence.getTokenArray();
 			for (String string : perm) {
 				if (!filter(string) && !binarization.contains(string)) {
-//					binarization.add(string);
+					// binarization.add(string);
 					res.add(new String[] { string, polarity });
 				}
 			}
@@ -110,12 +133,12 @@ public class MaxEnt extends AbstractClassifier {
 		return false;
 	}
 
-	private MaxentModel build(String dataFilePath) throws Exception {
+	private MaxentModel build(String dataFilePath) throws IOException {
 		// features model
 		FileReader datafr = new FileReader(new File(dataFilePath));
 		EventStream es = new BasicEventStream(new PlainTextByLineDataStream(
 				datafr));
-		GISModel model = GIS.trainModel(es, 100, 0,true,true);
+		GISModel model = GIS.trainModel(es, 100, 0, true, true);
 		File outputFile = new File(dataFilePath + ".model");
 		GISModelWriter writer = new SuffixSensitiveGISModelWriter(model,
 				outputFile);
@@ -123,7 +146,18 @@ public class MaxEnt extends AbstractClassifier {
 		return model;
 	}
 
-	public int[] test(Corpus testData) throws Exception {
+	/**
+	 * Predicts polarity of movie comments.
+	 * 
+	 * @param testData
+	 *            testing corpus
+	 * @return predicting stats. Result is an integer array with length of 2.<br/>
+	 *         First element is the number of correct predict. Second element is
+	 *         the number of incorrect predict.
+	 * @throws IOException
+	 *             if error occurs when read in model file
+	 */
+	public int[] test(Corpus testData) throws IOException {
 		int correct = 0;
 		int incorrect = 0;
 		MaxentModel maxentModel = build(modelFile);

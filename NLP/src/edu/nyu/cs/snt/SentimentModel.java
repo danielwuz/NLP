@@ -1,12 +1,30 @@
 package edu.nyu.cs.snt;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.nyu.cs.pub.Corpus;
 import edu.nyu.cs.pub.Sentence;
 
+/**
+ * 
+ * Sentimental analysis model.
+ * <p>
+ * This model tries out three different classifiers
+ * <ul>
+ * <li>Naive Bayes Classifier</li>
+ * <li>Maximum Entropy Classifier</li>
+ * <li>SVM Classifier</li>
+ * </ul>
+ * against either bigram or unigram model. <br/>
+ * see {@link www.cs.cornell.edu/home/llee/papers/sentiment.pdf} for more
+ * detail.
+ * 
+ * @author Daniel Wu
+ * 
+ */
 public class SentimentModel {
 
 	private FileManager fileManager = new FileManager();
@@ -15,7 +33,15 @@ public class SentimentModel {
 
 	private Logger logger = new Logger();
 
-	public void loadCorpus(String[] filePaths) throws Exception {
+	/**
+	 * Loads corpus from file system
+	 * 
+	 * @param filePaths
+	 *            corpus path
+	 * @throws IOException
+	 *             if error occurs when read in corpus file
+	 */
+	public void loadCorpus(String[] filePaths) throws IOException {
 		// positive comments
 		List<Corpus> posList = loadPositiveCorpus(filePaths[0]);
 		List<Corpus> negList = loadNegativeCorpus(filePaths[1]);
@@ -26,7 +52,7 @@ public class SentimentModel {
 		}
 	}
 
-	private List<Corpus> loadCorpusFromDir(String path) throws Exception {
+	private List<Corpus> loadCorpusFromDir(String path) throws IOException {
 		List<Corpus> corpusList = new ArrayList<Corpus>();
 		File[] files = new File(path).listFiles();
 		for (File file : files) {
@@ -36,14 +62,14 @@ public class SentimentModel {
 	}
 
 	private List<Corpus> loadNegativeCorpus(String negFilePath)
-			throws Exception {
+			throws IOException {
 		List<Corpus> negList = loadCorpusFromDir(negFilePath);
 		setPolarityTags(negList, Sentence.NEGATIVE);
 		return negList;
 	}
 
 	private List<Corpus> loadPositiveCorpus(String posFilePath)
-			throws Exception {
+			throws IOException {
 		List<Corpus> posList = loadCorpusFromDir(posFilePath);
 		// set polarity tags, used for accuracy scoring later
 		setPolarityTags(posList, Sentence.POSITIVE);
@@ -108,7 +134,8 @@ public class SentimentModel {
 	}
 
 	private void testUnigramWithSVM() {
-		System.out.println("\n\nExperience classification with SVM on unigram features...");
+		System.out
+				.println("\n\nExperience classification with SVM on unigram features...");
 		int correct = 0;
 		int incorrect = 0;
 		SVM svm = new SVM();
@@ -142,7 +169,8 @@ public class SentimentModel {
 	}
 
 	private void testUnigramWithMaxent() throws Exception {
-		System.out.println("\n\nExperience classification with MaxEnt on unigram features...");
+		System.out
+				.println("\n\nExperience classification with MaxEnt on unigram features...");
 		int correct = 0;
 		int incorrect = 0;
 		MaxEnt me = new MaxEnt(folders);
@@ -173,7 +201,8 @@ public class SentimentModel {
 	}
 
 	private void testBigramWithBinary() {
-		System.out.println("\n\nExperience classification with Naive Bayes on bigram binarization features...");
+		System.out
+				.println("\n\nExperience classification with Naive Bayes on bigram binarization features...");
 		int correct = 0;
 		int incorrect = 0;
 		NaiveBayesWithPres nb = new NaiveBayesWithPres(folders);
@@ -204,7 +233,8 @@ public class SentimentModel {
 	}
 
 	private void testUnigramWithBinary() {
-		System.out.println("\n\nExperience classification with Naive Bayes on unigram binarization features...");
+		System.out
+				.println("\n\nExperience classification with Naive Bayes on unigram binarization features...");
 		int correct = 0;
 		int incorrect = 0;
 		NaiveBayesWithPres nb = new NaiveBayesWithPres(folders);
@@ -235,7 +265,8 @@ public class SentimentModel {
 	}
 
 	private void testBigramWithFreq() throws Exception {
-		System.out.println("\n\nExperience classification with Naive Bayes on bigram frequency features...");
+		System.out
+				.println("\n\nExperience classification with Naive Bayes on bigram frequency features...");
 		int correct = 0;
 		int incorrect = 0;
 		NaiveBayes nb = new NaiveBayes(folders);
@@ -266,7 +297,8 @@ public class SentimentModel {
 	}
 
 	private void testUnigramWithFreq() throws Exception {
-		System.out.println("\n\nExperience classification with Naive Bayes on unigram frequency features...");
+		System.out
+				.println("\n\nExperience classification with Naive Bayes on unigram frequency features...");
 		int correct = 0;
 		int incorrect = 0;
 		NaiveBayes nb = new NaiveBayes(folders);
@@ -309,18 +341,26 @@ public class SentimentModel {
 		logger.log(msg);
 	}
 
+	/**
+	 * Log class
+	 * 
+	 * @author Daniel Wu
+	 * 
+	 */
 	public static class Logger {
 
 		private StringBuffer log = new StringBuffer();
-
-		public Logger() {
-			// log.append("\n\nCross validation with Naive Bayes Classifier...");
-		}
 
 		public void output() {
 			System.out.println(log);
 		}
 
+		/**
+		 * write message in log
+		 * 
+		 * @param string
+		 *            message
+		 */
 		public void log(String string) {
 			// log.append(string + "\n");
 			System.out.println(string);

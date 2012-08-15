@@ -15,9 +15,9 @@ import edu.nyu.cs.pub.TextTool;
 import edu.nyu.cs.pub.Token;
 
 /**
- * Transition Probability Matrix for hidden Markov Model
+ * Transition Probability Matrix. 
  * 
- * @author Zhe Wu N16445442 zw339@nyu.edu
+ * @author Daniel Wu
  * 
  */
 public class TransitionMatrix extends Matrix {
@@ -130,10 +130,10 @@ public class TransitionMatrix extends Matrix {
 		}
 	}
 
-//	private List<String> formalizeInput(String[] input) {
-//		List<String> res = TextTool.appendSymbols(input);
-//		return res;
-//	}
+	// private List<String> formalizeInput(String[] input) {
+	// List<String> res = TextTool.appendSymbols(input);
+	// return res;
+	// }
 
 	public Double probabilityWithBigram(String[] perm) {
 		List<String[]> biStrs = TextTool.bigramWithSymbols(perm);
