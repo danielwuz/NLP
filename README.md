@@ -16,3 +16,5 @@ Including below tasks:
 5. Task 5. Sentimental Analysis and Rating Star
  * Determine a user's attitude positive or negative based on his or her comments to a movie.
  * Rating a movie within rank 1-5 based its comments
+
+See [wiki homepage](https://github.com/danielwuz/NLP/wiki)
